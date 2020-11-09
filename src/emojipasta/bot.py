@@ -29,8 +29,9 @@ def main():
 			continue
 
 		for reply in comment.replies:
-			skip = True
-			break
+			if reply.author == reddit.config.username:
+				skip = True
+				break
 		
 		if not skip:
 			reply_body = gen.generate_emojipasta(comment.body)
