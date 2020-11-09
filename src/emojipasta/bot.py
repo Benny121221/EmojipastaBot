@@ -22,26 +22,53 @@ def main():
 	gen = EmojipastaGenerator.of_default_mappings()
 
 	user = reddit.redditor("EmojifierBot")
-	for comment in user.comments.hot(limit = None):
-		skip = False 
-		comment.refresh()
-		if comment.parent().author == reddit.config.username:
-			continue
+	
+	while True:
+		try:
+			for comment in user.comments.hot(limit = None):
+				skip = False
+				
+				if comment.submission.locked:
+					continue
+				
+				
+				comment.refresh()
+				if comment.parent().author == reddit.config.username:
+					continue
 
-		for reply in comment.replies:
-			if reply.author == reddit.config.username:
-				skip = True
-				break
-		
-		if not skip:
-			reply_body = gen.generate_emojipasta(comment.body)
-			comment.reply(reply_body)
+				for reply in comment.replies:
+					if reply.author == reddit.config.username:
+						skip = True
+						break
+				
+				if not skip:
+					reply_body = gen.generate_emojipasta(comment.body)
+					
+					if len(reply_body) > 10000:
+						continue
+					
+					comment.reply(reply_body)
+					
+					print_header('-', time.strftime("%Y-%m-%d %H:%M:%S GMT", time.gmtime()) + '\nReply Body:\n' + reply_body)
+					#time.sleep(1)
 			
-			print('-' * 80)
-			print(time.strftime("%Y-%m-%d %H:%M:%S GMT", time.gmtime()))
-			print("Reply Body:")
-			print(reply_body)
-			print('-' * 80)
-			time.sleep(900) # 15 minutes
+			print_header('*', "Reached end of iterable, retrying shortly.")
+		
+		except BaseException as e:
+			print_error(e)
+		
+		#time.sleep(3)
+
+def print_error(error):
+	print('#' * 80)
+	print('#' * 80)
+	print(f"An error of type {type(error)} was raised:")
+	print(vars(error))
+	print('-' * 80)
+
+def print_header(char, text):
+	print(char * 80)
+	print(text)
+	print(char * 80)
 
 main()
