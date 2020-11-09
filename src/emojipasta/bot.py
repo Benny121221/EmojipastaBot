@@ -51,7 +51,7 @@ def main():
 						
 						comment.reply(reply_body)
 						
-						print_header('-', time.strftime("%Y-%m-%d %H:%M:%S GMT", time.gmtime()) + '\nReply Body:\n' + reply_body)
+						print_header('-', get_formatted_gmt_time() + '\nReply Body:\n' + reply_body)
 						#time.sleep(1)
 				except Exception as e:
 					handle_error(e)
@@ -76,6 +76,7 @@ def handle_error(e):
 def print_error(error):
 	print('#' * 80)
 	print('#' * 80)
+	print(get_formatted_gmt_time())
 	print(f"An error of type {type(error)} was raised:")
 	print(vars(error))
 	print('-' * 80)
@@ -84,5 +85,8 @@ def print_header(char, text):
 	print(char * 80)
 	print(text)
 	print(char * 80)
+
+def get_formatted_gmt_time():
+	return time.strftime("%Y-%m-%d %H:%M:%S GMT", time.gmtime())
 
 main()
