@@ -1,3 +1,8 @@
+## Forkers Notes:
+I highjacked this bot's code to create my own. It replies to EmojifierBot with even more emojified text. I made some big changes to the folder structure to make it happen and I deleted a lot of files which were unnecessary (to me).
+
+Below is the original readme. Note that it is now no longer correct after my changes.
+
 ## Description
 [u/AnEmojipastaBot](https://www.reddit.com/user/anemojipastabot) (now suspended from reddit) turns the parent
 of your comment into emojipasta. It can be summoned by mentioning it.
