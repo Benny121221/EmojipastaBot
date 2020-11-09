@@ -53,12 +53,12 @@ def main():
 						
 						print_header('-', time.strftime("%Y-%m-%d %H:%M:%S GMT", time.gmtime()) + '\nReply Body:\n' + reply_body)
 						#time.sleep(1)
-				except BaseException as e:
+				except Exception as e:
 					handle_error(e)
 			
 			print_header('*', "Reached end of iterable, retrying shortly.")
 		
-		except BaseException as e:
+		except Exception as e:
 			handle_error(e)
 
 		
